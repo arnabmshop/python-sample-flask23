@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, render_template,jsonify,request
+from flask import Flask, render_template,request
 # from azure.storage.blob import BlobServiceClient
 from . import app
 
