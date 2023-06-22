@@ -17,3 +17,10 @@ def upload():
         blob_client.upload_blob(file)
         return 'File uploaded successfully'
     return 'No file selected'
+
+@app.route('/execute-script')
+def execute_script():
+    # Add your Python script logic here
+    # For example, print a message
+    print('Python script executed successfully')
+    return '', 200
