@@ -1,9 +1,10 @@
 from datetime import datetime
-from flask import Flask, render_template
+from flask import Flask, render_template,jsonify
 from . import app
 
 CONNECTION_STRING = 'DefaultEndpointsProtocol=https;AccountName=arnabsa;AccountKey=GlWpxAlG70eELtWZaz0FrbYyZqLGApX9tSxNLCSDDSjbdYsgbRMYCL/IlSFRQFf5mVcBKPno7XoZ+AStsx90rA==;EndpointSuffix=core.windows.net'
 CONTAINER_NAME = 'azureml'
+blob_service_client = BlobServiceClient.from_connection_string(CONNECTION_STRING)
 
 @app.route("/")
 def home():
@@ -18,9 +19,9 @@ def upload():
         return 'File uploaded successfully'
     return 'No file selected'
 
-@app.route('/execute-script')
+@app.route('/execute-script', methods=['POST'])
 def execute_script():
     # Add your Python script logic here
     # For example, print a message
     print('Python script executed successfully')
-    return '', 200
+    return jsonify({'success': True})
