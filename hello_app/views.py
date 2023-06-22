@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import Flask, render_template,jsonify,request
-from azure.storage.blob import BlobServiceClient
+# from azure.storage.blob import BlobServiceClient
 from . import app
 
 # CONNECTION_STRING = 'DefaultEndpointsProtocol=https;AccountName=arnabsa;AccountKey=GlWpxAlG70eELtWZaz0FrbYyZqLGApX9tSxNLCSDDSjbdYsgbRMYCL/IlSFRQFf5mVcBKPno7XoZ+AStsx90rA==;EndpointSuffix=core.windows.net'
