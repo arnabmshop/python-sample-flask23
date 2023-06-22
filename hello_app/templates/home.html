@@ -1,7 +1,11 @@
 {% extends "layout.html" %}
 {% block title %}
-Home
+Upload
 {% endblock %}
 {% block content %}
-<p>Home page for the Visual Studio Code Flask tutorial.</p>
+<p>Upload a File</p>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+</form>
 {% endblock %}
