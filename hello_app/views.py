@@ -5,6 +5,10 @@ from . import app
 CONNECTION_STRING = 'DefaultEndpointsProtocol=https;AccountName=arnabsa;AccountKey=GlWpxAlG70eELtWZaz0FrbYyZqLGApX9tSxNLCSDDSjbdYsgbRMYCL/IlSFRQFf5mVcBKPno7XoZ+AStsx90rA==;EndpointSuffix=core.windows.net'
 CONTAINER_NAME = 'azureml'
 
+@app.route("/")
+def home():
+    return render_template("home.html")
+
 @app.route('/upload', methods=['POST'])
 def upload():
     file = request.files['file']
