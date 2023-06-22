@@ -24,6 +24,10 @@
     <body>
         <title><p1>Generate User Stories, Acceptance Criteria and Test Cases from a Business Requirement Document</p1></title>
         <p>Upload your BRD</p>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+        </form>
         <button type="button">Upload</button>
         <p>Are you ready to generate content for developers and testers?</p>
         <button type="button" onclick="processFile()">Process</button>
