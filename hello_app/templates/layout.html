@@ -25,9 +25,10 @@
     <body>
         <title><p1>BRD to Stories</p1></title>
         <p>Upload your BRD</p>
-        <form action="/upload" method="post" enctype="multipart/form-data">
+        <form action="/process" method="post" enctype="multipart/form-data">
         <input type="file" name="file">
         <input type="submit" value="Upload">
+        </form>
         </form>
         <p>Are you ready to generate content for developers and testers?</p>
         <button type="button" onclick="processFile()">Process</button>
