@@ -3,12 +3,28 @@
     <head>
         <meta charset="utf-8" />
         <tile>Generate User Stories,Acceptance Criteria and Test Cases</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function processFile() {
+                $.ajax({
+                    url: '/execute-script',
+                    type: 'POST',
+                    success: function() {
+                        console.log('Script executed successfully');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error executing script:', error);
+                    }
+                });
+            }
+        </script>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css') }}"  />
     </head>
 
     <body>
         <title><p1>Generate User Stories, Acceptance Criteria and Test Cases from a Business Requirement Document</p1></title>
-         <a href="{{ url_for('home') }}" class="navbar-brand"></a>
+        
+        <button type="button" onclick="processFile()">Process</button>
         
         <div class="body-content">
             {% block content %}
