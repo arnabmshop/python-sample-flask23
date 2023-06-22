@@ -3,20 +3,21 @@
     <head>
         <meta charset="utf-8" />
         <tile>Generate User Stories, Acceptance Criteria and Test Cases from a Business Requirement Document</title>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-        function processFile() {
-            $.ajax({
-                url: '/execute-script',
-                type: 'POST',
-                success: function() {
-                    console.log('Script executed successfully');
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error executing script:', error);
-                }
-            });
-        }
+            function processFile() {
+                // Send a request to the Flask endpoint to execute the Python script
+                fetch('/execute-script')
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Script executed successfully');
+                        } else {
+                            console.error('Error executing script');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error executing script:', error);
+                    });
+            }
         </script>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css') }}"  />
     </head>
