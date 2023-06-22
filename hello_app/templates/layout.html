@@ -8,13 +8,10 @@
 
     <body>
         <h1>Generate User Stories, Acceptance Criteria and Test Cases from a Business Requirement Document</h1>
-        <form method="POST" action="/" enctype="multipart/form-data">
-            <input type="file" name="file" style="display: none;" id="upload-file">
-            <label for="upload-file" class="button">Upload</label>
-            <input type="submit" value="Process" class="button">
-            <a href="{{ url_for('download_file', filename='example.txt') }}" class="button">Download</a>
-        </form>
-
+         <a href="{{ url_for('Upload') }}" class="navbar-brand">Upload</a>
+            <a href="{{ url_for('Process') }}" class="navbar-item">Process</a>
+            <a href="{{ url_for('Download') }}" class="navbar-item">Download</a>
+        
         <div class="body-content">
             {% block content %}
             {% endblock %}
