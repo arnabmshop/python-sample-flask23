@@ -1,47 +1,13 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <tile>Generate User Stories, Acceptance Criteria and Test Cases from a Business Requirement Document</title>
-        <script>
-            function processFile() {
-                // Send a request to the Flask endpoint to execute the Python script
-                fetch('/execute-script')
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('Script executed successfully');
-                        } else {
-                            console.error('Error executing script');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error executing script:', error);
-                    });
-            }
-        </script>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css') }}"  />
-    </head>
-
-    <body>
-        <title><p1>BRD to Stories</p1></title>
-        <p>Upload your BRD</p>
-        <form action="/process" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
+<head>
+    <title>PDF Summarizer</title>
+</head>
+<body>
+    <h1>PDF Summarizer</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".pdf">
         <input type="submit" value="Upload">
-        </form>
-        </form>
-        <p>Are you ready to generate content for developers and testers?</p>
-        <button type="button" onclick="processFile()">Process</button>
-        <p>Download your file</p>
-        <button type="button">Download</button>
-        
-        <div class="body-content">
-            {% block content %}
-            {% endblock %}
-            <hr/>
-            <footer>
-                <p>&copy; 2023</p>
-            </footer>
-        </div>
-    </body>
+    </form>
+</body>
 </html>
