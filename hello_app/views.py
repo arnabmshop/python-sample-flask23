@@ -42,7 +42,7 @@ def summarize():
         
         '''
 
-    return render_template("output.html", data = {"summary": summary})
+    return render_template("home.html", data = {"summary": summary})
 
 if __name__ == '__main__': # It Allows You to Execute Code When the File Runs as a Script
     app.run()
