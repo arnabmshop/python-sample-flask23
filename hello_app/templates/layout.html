@@ -5,42 +5,9 @@
 </head>
 <body>
     <h1>PDF Summarizer</h1>
-    <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+    <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="file" accept=".pdf">
         <input type="submit" value="Upload">
     </form>
-
-    <div id="summary-section" style="display: none;">
-        <h2>Summary</h2>
-        <p id="summary-text"></p>
-        <a id="download-link" href="" download>Download Summary</a>
-    </div>
-
-    <script>
-        // Update the form action and handle the response
-        document.getElementById('upload-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            var form = e.target;
-            var formData = new FormData(form);
-
-            fetch(form.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    document.getElementById('summary-text').textContent = data.summary;
-                    document.getElementById('download-link').href = data.doc_url;
-                    document.getElementById('summary-section').style.display = 'block';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
-    </script>
 </body>
 </html>
