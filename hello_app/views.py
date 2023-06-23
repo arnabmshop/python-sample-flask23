@@ -1,6 +1,6 @@
 import os
 import tempfile
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, jsonify
 from PyPDF2 import PdfFileReader
 from docx import Document
 
@@ -31,20 +31,20 @@ def generate_summary(pdf_path):
 
 @app.route('/')
 def index():
-    return render_template('layout.html')
+    return render_template('index.html')
 
 
 @app.route('/upload', methods=['POST'])
 def upload():
     # Check if a file is selected for upload
     if 'file' not in request.files:
-        return 'No file selected'
+        return jsonify({'error': 'No file selected'})
 
     file = request.files['file']
 
     # Check if a file is uploaded
     if file.filename == '':
-        return 'No file selected'
+        return jsonify({'error': 'No file selected'})
 
     # Save the uploaded file to a temporary location
     temp_dir = tempfile.mkdtemp()
@@ -69,7 +69,7 @@ def upload():
     os.rmdir(temp_dir)
 
     # Provide the summary document as a download
-    return send_file(doc_path, as_attachment=True)
+    return jsonify({'summary': summary, 'doc_url': doc_path})
 
 
 if __name__ == '__main__':
