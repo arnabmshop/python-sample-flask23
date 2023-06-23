@@ -13,7 +13,7 @@ model = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('layout.html')
 
 @app.route('/text-summarization', methods=["POST"])
 def summarize():
