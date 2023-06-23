@@ -1,28 +1,76 @@
-from datetime import datetime
-from flask import Flask, render_template,request
-#from azure.storage.blob import BlobServiceClient
-from . import app
+import os
+import tempfile
+from flask import Flask, render_template, request, send_file
+from PyPDF2 import PdfFileReader
+from docx import Document
 
-# CONNECTION_STRING = 'DefaultEndpointsProtocol=https;AccountName=arnabsa;AccountKey=GlWpxAlG70eELtWZaz0FrbYyZqLGApX9tSxNLCSDDSjbdYsgbRMYCL/IlSFRQFf5mVcBKPno7XoZ+AStsx90rA==;EndpointSuffix=core.windows.net'
-# CONTAINER_NAME = 'azureml'
-# blob_service_client = BlobServiceClient.from_connection_string(CONNECTION_STRING)
 
-@app.route("/")
-def home():
-    return render_template("layout.html")
+app = Flask(__name__)
+
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+def generate_summary(pdf_path):
+    # Load the PDF file
+    with open(pdf_path, 'rb') as f:
+        pdf = PdfFileReader(f)
+        num_pages = pdf.getNumPages()
+
+        # Extract text from each page
+        text = ''
+        for page_num in range(num_pages):
+            page = pdf.getPage(page_num)
+            text += page.extract_text()
+
+        # Generate summary (you can replace this with your own summarization logic)
+        summary = text[:500]  # Example: Take the first 500 characters as a summary
+
+    return summary
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    file = request.files['file']
-    if file:
-        # blob_client = blob_service_client.get_blob_client(container=CONTAINER_NAME, blob=file.filename)
-        # blob_client.upload_blob(file)
-        return 'File uploaded successfully'
-    return 'No file selected'
+    # Check if a file is selected for upload
+    if 'file' not in request.files:
+        return 'No file selected'
 
-@app.route('/execute-script')
-def execute_script():
-    # Add your Python script logic here
-    # For example, print a message
-    print('Python script executed successfully')
-    return '', 200
+    file = request.files['file']
+
+    # Check if a file is uploaded
+    if file.filename == '':
+        return 'No file selected'
+
+    # Save the uploaded file to a temporary location
+    temp_dir = tempfile.mkdtemp()
+    temp_path = os.path.join(temp_dir, file.filename)
+    file.save(temp_path)
+
+    # Show "file uploaded successfully" message
+    message = 'File uploaded successfully'
+
+    # Process the uploaded file
+    message = 'File is being processed...'
+    summary = generate_summary(temp_path)
+
+    # Create a Word document with the summary
+    doc = Document()
+    doc.add_paragraph(summary)
+    doc_path = os.path.join(temp_dir, 'summary.docx')
+    doc.save(doc_path)
+
+    # Remove the temporary directory
+    os.remove(temp_path)
+    os.rmdir(temp_dir)
+
+    # Provide the summary document as a download
+    return send_file(doc_path, as_attachment=True)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
